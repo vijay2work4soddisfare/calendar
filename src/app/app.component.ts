@@ -24,13 +24,16 @@ export class AppComponent {
 		  	this.lon=position.coords.longitude;
 		  	this.acc=position.coords.accuracy;
   		}, this.error);
+  	af.auth.subscribe(auth=>{
+  		console.log(auth);
+  	});
   }
   clicked(){
   	//this.af.auth.login();
   	var provider=new firebase.auth.GoogleAuthProvider();
   	provider.addScope('https://www.googleapis.com/auth/calendar');
   	firebase.auth().signInWithPopup(provider).then(result=>{
-  		//console.log(result.credential);
+  		console.log(result);
   		this.cred=result.credential;
   		this.isIn=true;
   		this.header.append('Authorization', 'Bearer '+this.cred.accessToken);
@@ -46,12 +49,12 @@ export class AppComponent {
   		headers:this.header
   	})
   	  .subscribe(response=>{
-  	  	console.log(response);
+  	  	//console.log(response);
   	  	this.listDisp=response;
   	  	this.listDispBody=this.listDisp._body;
   	  	var jsonText=JSON.parse(this.listDispBody);
   	  	this.listDispBodyItem=jsonText.items;
-  	  	console.log(this.listDispBodyItem);
+  	  	//console.log(this.listDispBodyItem);
 	  	  if(Object.keys(this.listDispBodyItem).length==0) {
 	  	  	this.errrrr="No events in the list";
 	  	  }else{
@@ -105,7 +108,7 @@ export class AppComponent {
 	};
 	var i=1;
 	var iii=setInterval(()=>{
-		console.log(this.lat); 
+		//console.log(this.lat); 
 		if(this.lat!=null && i==1) {
 		    this.http.post("https://www.googleapis.com/calendar/v3/calendars/primary/events",
 				event
@@ -113,7 +116,7 @@ export class AppComponent {
 					headers:this.header,
 				})
 			  	.subscribe(response=>{
-			  		console.log(response);
+			  		//console.log(response);
   					this.list();
 		  	  });
 			clearInterval(iii);
@@ -125,7 +128,7 @@ export class AppComponent {
   	this.http.delete('https://www.googleapis.com/calendar/v3/calendars/primary/events/'+id,{
 					headers:this.header,
 				}).subscribe(response=>{
-  		console.log(response);
+  		//console.log(response);
   		this.list();
   	});
   }
