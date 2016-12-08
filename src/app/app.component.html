@@ -1,3 +1,13 @@
-<h1>
-  {{title}}
-</h1>
+<button (click)="clicked()" *ngIf="!isIn">login</button>
+<div *ngIf="isIn">	
+	<button (click)="logout()">logout</button>
+	<button (click)="list()">load event</button>
+	<input type="text" #to placeholder="To" value="503r.vijay@gmail.com">
+	<input type="text" #sum placeholder="Title" value="This is test 001">
+	<input type="text" #desc placeholder="Message" value="This is body of test 001">
+	<button (click)="createEvents(sum.value,to.value,desc.value)">Send</button>
+</div>
+<div *ngFor="let item of listDispBodyItem">
+	<div *ngFor="let i of item.attendees">{{i.displayName}}</div><div>{{item.summary}}</div><div><button (click)="delete(item.id)">delete</button></div>
+</div>
+{{errrrr}}
